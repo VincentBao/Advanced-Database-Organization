@@ -1,0 +1,66 @@
+How to run the excution file
+-------------------------------------
+1) Open terminal and go to target folder.
+2) Type "ls" to view existed file in the folder.
+3) Make sure cleaning the exsited make file has been deleted, type "make clean".
+4) Type "make" to make excution files.
+5) To run test1, type "./test1".
+
+
+
+***********************
+Function Description
+---Buffer Pool Functions----
+1) initBufferPool
+	Create a buffer pool for an existing page file.
+	creates a new buffer pool with numPages page frames using the page replacement strategy strategy.
+	The pool is used to cache pages from the page file with name pageFileName. Initially, all page frames should be empty. The page file should already exist.
+
+2) shutdownBufferPool
+	Shutdown a buffer pool and free up all associated resources.
+	shutdownBufferPool destroys a buffer pool. This method should free up all resources associated with buffer pool. For example, it should free the memory allocated for page frames. If the buffer pool contains any dirty pages, then these pages should be written back to disk before destroying the pool. It is an error to shutdown a buffer pool that has pinned pages.
+
+3) forceFlushPool
+	Force the buffer manager to write all dirty pages to disk.
+	forceFlushPool causes all dirty pages (with fix count 0) from the buffer pool to be written to disk.
+
+---Page Management Functions---
+
+1) pinPage 
+	pins the page with page number pageNum. The buffer manager is responsible to set the pageNum field of the page handle passed to the method. Similarly, the data field should point to the page frame the page is stored in (the area in memory storing the content of the page).
+	helper function was written to organize the structure of function
+
+2) unpinPage 
+	unpins the page page. The pageNum field of page should be used to figure out which page to unpin.
+
+3) markDirty 
+	marks a page as dirty.
+
+4) forcePage 
+	should write the current content of the page back to the page file on disk.
+
+---Statistics Functions---
+
+These functions return statistics about a buffer pool and its contents. The print debug functions explained below internally use these functions to gather information about a pool.
+
+1) getFrameContents 
+	returns an array of PageNumbers (of size numPages) where the ith element is the number of the page stored in the ith page frame. An empty page frame is represented using the constant NO_PAGE.
+
+2) getDirtyFlags 
+	returns an array of bools (of size numPages) where the ith element is TRUE if the page stored in the ith page frame is dirty. Empty page frames are considered as clean.
+
+3) getFixCounts 
+	returns an array of ints (of size numPages) where the ith element is the fix count of the page stored in the ith page frame. Return 0 for empty page frames.
+
+4) getNumReadIO 
+	returns the number of pages that have been read from disk since a buffer pool has been initialized. You code is responsible to initializing this statistic at pool creating time and update whenever a page is read from the page file into a page frame.
+
+5) getNumWriteIO 
+	returns the number of pages written to the page file since the buffer pool has been initialized.
+
+*************
+Reference
+Homework instruction
+http://cs.iit.edu/~cs525/assign2.html
+MakeFile was made using following tutorial -
+http://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/
